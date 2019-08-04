@@ -1,15 +1,14 @@
-const express = require('express')
-const http = require('http')
+const app = require('express')()
+const server = require('http').createServer(app)
+const io = require('socket.io')(server)
 const path = require('path')
-const socketio = require('socket.io')
 
-const app = express()
-const server = http.createServer(app) // raw http for io
-const io = socketio(server) // socket.io's setup
+// const app = express()
+// const server = http.createServer(app) // raw http for io
+// const io = socketio(server) // socket.io's setup
 
-// Middleware
-const publicDirectoryPath = path.join(__dirname, './public')
-app.use(express.static(publicDirectoryPath))
+// Static Folder
+app.use(express.static(path.join(__dirname, './public')))
 
 io.on('connection', socket => {
     console.log("new connection created")
